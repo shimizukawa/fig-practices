@@ -1,0 +1,59 @@
+ap:
+  build: .
+  command: python app.py
+  ports:
+    - "5000:5000"
+  volumes:
+    - .:/code
+  links:
+    - redisap:redis
+    - mysqlap:mysql
+
+redisap:
+  image: redis:2
+  volumes:
+    - ./var/redisap:/data
+
+mysqlap:
+  image: mysql:5.6
+  environment:
+    MYSQL_USER: "mysql"
+    MYSQL_PASSWORD: "mysql"
+    MYSQL_ROOT_PASSWORD: "mysql"
+    MYSQL_DATABASE: "ap"
+  volumes:
+    - ./var/mysqlap:/var/lib/mysql
+
+nginx:
+  build: ./containers/nginx-fluentd
+  links:
+    - ap:ap
+    - kibana4:kibana4
+    - fluentd:fluentd
+  ports:
+    - '80:80'
+    - '5601:5601'
+  volumes:
+    - ./conf/nginx-fluentd:/etc/fluentd
+    - ./conf/nginx/conf.d:/etc/nginx/conf.d
+    - ./var/log/nginx-fluentd:/var/log/fluentd/
+    # - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf
+
+fluentd:
+  build: ./containers/fluentd
+  links:
+    - kibana4:kibana4
+  environment:
+    ES_HOST: kibana4
+  volumes:
+    - ./var/log/fluentd:/var/log/fluentd/
+  ports:
+    - '8888:8888'
+
+kibana4:
+  image: devdb/kibana
+  volumes:
+    - ./var/kibana4_elasticsearch:/opt/elasticsearch/data
+  ports:
+    - '9200:9200'
+
