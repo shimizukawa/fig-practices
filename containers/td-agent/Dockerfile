@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get -y upgrade
 
 # ruby related packages for td-agent
-RUN apt-get -y install --no-install-recommends curl libcurl4-openssl-dev ruby ruby-dev make
+RUN apt-get -y install curl libcurl4-openssl-dev ruby ruby-dev make
 
 # install fluentd td-agent
 RUN curl -L http://toolbelt.treasuredata.com/sh/install-ubuntu-trusty-td-agent2.sh | sh
