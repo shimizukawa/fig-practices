@@ -4,12 +4,17 @@ MAINTAINER Takayuki Shimizukawa shimizukawa@gmail.com
 # environment
 ENV DEBIAN_FRONTEND noninteractive
 
-# update, curl
+# update
 RUN apt-get update && apt-get -y upgrade
-RUN apt-get -y install curl libcurl4-openssl-dev ruby ruby-dev make && apt-get clean
 
-# install fluentd
+# ruby related packages for td-agent
+RUN apt-get -y install --no-install-recommends curl libcurl4-openssl-dev ruby ruby-dev make
+
+# install fluentd td-agent
 RUN curl -L http://toolbelt.treasuredata.com/sh/install-ubuntu-trusty-td-agent2.sh | sh
+
+# clean cache files
+RUN apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
 # install fluentd plugins
 RUN /opt/td-agent/embedded/bin/fluent-gem install --no-ri --no-rdoc \
