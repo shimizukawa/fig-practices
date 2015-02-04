@@ -2,7 +2,7 @@
   type tail
   format nginx
   path /var/log/nginx/ap.access.log
-  pos_file /var/log/td-agent/messages.pos
+  pos_file /var/log/fluentd/messages.pos
   tag ap.nginx.access
 </source>
 
@@ -10,7 +10,7 @@
 #  type tail
 #  format nginx
 #  path /var/log/nginx/access.log
-#  pos_file /var/log/td-agent/messages.pos
+#  pos_file /var/log/fluentd/messages.pos
 #  tag other.nginx.access
 #</source>
 

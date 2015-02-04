@@ -1,4 +1,4 @@
-FROM shimizukawa/td-agent
+FROM shimizukawa/fluentd
 MAINTAINER Takayuki Shimizukawa shimizukawa@gmail.com
 
 RUN apt-key adv --keyserver pgp.mit.edu --recv-keys ABF5BD827BD9BF62
@@ -20,5 +20,4 @@ VOLUME ["/var/cache/nginx"]
 
 EXPOSE 80 443
 
-CMD nginx && /etc/init.d/td-agent stop && /opt/td-agent/embedded/bin/fluentd -c /etc/fluentd/fluent.conf
-
+CMD nginx && /bin/bash /app/bin/start

@@ -22,7 +22,5 @@ WORKDIR /app
 ENV ES_HOST localhost
 ENV ES_PORT 9200
 
-ENTRYPOINT [ "/bin/bash" ]
-
-CMD [ "/app/bin/start" ]
+CMD [ "/bin/bash", "/app/bin/start" ]
 
