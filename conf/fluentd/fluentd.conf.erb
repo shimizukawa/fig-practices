@@ -1,4 +1,8 @@
 <source>
+  type forward
+</source>
+
+<source>
   type tail
   format nginx
   path /var/log/nginx/ap.access.log
@@ -15,19 +19,27 @@
 #</source>
 
 <match *.nginx.access>
-  type forward
-  send_timeout 3s
-  recover_wait 10s
-  heartbeat_interval 1s
-  phi_threshold 16
-  hard_timeout 60s
+  type copy
+  <store>
+    type elasticsearch
+    host <%= ENV['ES_HOST'] %>
+    port <%= ENV['ES_PORT'] %>
+    index_name nginx
+    type_name nginx
+    logstash_format true
+    include_tag_key true
+    tag_key @log_name
+    flush_interval 1s
+  </store>
 
-  <server>
-    name fluentd
-    host fluentd
-    port 24224
-    weight 60
-  </server>
+  <store>
+    type file
+    path /var/log/fluentd/access_log_debug.log
+  </store>
+
+  <store>
+    type stdout
+  </store>
 </match>
 
 <source>
