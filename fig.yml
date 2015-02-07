@@ -2,7 +2,7 @@ ap:
   build: .
   command: python app.py
   volumes:
-    - .:/code
+    - ./code:/code
   links:
     - redisap:redis
   #ports:  # for debugging to direct access
