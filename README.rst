@@ -25,8 +25,7 @@ Used containers
 .. _python:2.7: https://registry.hub.docker.com/_/python/
 .. _redis:2: https://registry.hub.docker.com/_/redis/
 .. _nginx:latest: https://registry.hub.docker.com/_/nginx/
-.. _shimizukawa/fluentd:latest:
-https://registry.hub.docker.com/u/shimizukawa/fluentd/
+.. _shimizukawa/fluentd:latest: https://registry.hub.docker.com/u/shimizukawa/fluentd/
 .. _devdb/kibana:latest: https://registry.hub.docker.com/devdb/kibana
 
 
