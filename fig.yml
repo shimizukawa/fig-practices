@@ -1,43 +1,32 @@
 ap:
   build: .
   command: python app.py
-  ports:
-    - "5000:5000"
   volumes:
     - .:/code
   links:
     - redisap:redis
-    - mysqlap:mysql
+  #ports:  # for debugging to direct access
+  #  - "5000:5000"
 
 redisap:
   image: redis:2
   volumes:
     - ./var/redisap:/data
 
-mysqlap:
-  image: mysql:5.6
-  environment:
-    MYSQL_USER: "mysql"
-    MYSQL_PASSWORD: "mysql"
-    MYSQL_ROOT_PASSWORD: "mysql"
-    MYSQL_DATABASE: "ap"
-  volumes:
-    - ./var/mysqlap:/var/lib/mysql
-
 nginx:
-  image: nginx
+  image: nginx:latest
   links:
     - ap:ap
     - kibana4:kibana4
-  ports:
-    - '80:80'
-    - '5601:5601'
   volumes:
     - ./conf/nginx/conf.d:/etc/nginx/conf.d
     - /var/log/nginx
+  ports:
+    - '80:80'
+    - '5601:5601'
 
 fluentd:
-  image: shimizukawa/fluentd
+  image: shimizukawa/fluentd:latest
   links:
     - kibana4:kibana4
   environment:
@@ -49,9 +38,9 @@ fluentd:
     - ./var/log/fluentd:/var/log/fluentd
 
 kibana4:
-  image: devdb/kibana
+  image: devdb/kibana:latest
   volumes:
     - ./var/kibana4_elasticsearch:/opt/elasticsearch/data
-  ports:
-    - '9200:9200'
+  #ports:  # for debugging to direct access
+  #  - '9200:9200'
 
