@@ -2,6 +2,23 @@
 How to work
 ===============
 
+Bootstrap
+==========
+
+1. install vagrant + virtualbox.
+2. execute::
+
+      local $ vagrant up     # provisioner make docker environment
+      local $ vagrant ssh
+      ubuntu $ sudo su
+      ubuntu # cd /vagrant
+      ubuntu # fig up
+
+3. browse to:
+
+   - http://192.168.10.10/ to see FlaskApp view
+   - http://192.168.10.10:5601/ to see Kibana4 view
+
 
 Used containers
 ===============
